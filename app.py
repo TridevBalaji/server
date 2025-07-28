@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -17,3 +17,10 @@ def greet(name):
 @app.route('/health')
 def health():
     return "OK", 200
+
+# ✅ POST method route
+@app.route('/submit', methods=['POST'])
+def submit():
+    data = request.get_json()
+    name = data.get("name", "Guest")
+    return jsonify(message=f"Hello, {name}! Your data was received."), 200
